@@ -46,3 +46,37 @@ export interface TelegramMessageRequest {
 }
 
 export type WiktionaryAPIResponse = [string, [string, string] | []];
+
+export type WordChainGameMode =
+  | "Noob"
+  | "Casual"
+  | "Challenge"
+  | "Banned Letters"
+  | "Me vs Bot";
+
+export interface WordChainGame {
+  gameStartedAt: Date;
+  joinable: boolean;
+  users: TelegramMessageAuthor[];
+  longestWord: string;
+  longestWordUser: TelegramMessageAuthor;
+  currentUser: TelegramMessageAuthor;
+  currentStartingLetter: string;
+  currentWordMinLength: number;
+  roundIndex: number;
+  usedWords: string[];
+  reduce: boolean;
+  mode: WordChainGameMode;
+  maxLives: number;
+  playerLives: {
+    [userId: string]: number;
+  };
+  bannedLetters: string[];
+  shouldAddBannedLetter: boolean;
+  score: {
+    [key: string]: number;
+  };
+}
+export interface ActiveWordChainGames {
+  [chatId: string]: WordChainGame | undefined;
+}

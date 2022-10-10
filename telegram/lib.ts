@@ -1,5 +1,5 @@
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
-import { TelegramMessageRequest } from "../types.ts";
+import type { TelegramMessageRequest } from "../types.ts";
 
 const token = Deno.env.get("LITERALLY_BOT_TOKEN");
 
@@ -18,4 +18,33 @@ export const sendMessage = (messageRequest: TelegramMessageRequest) => {
       "content-type": "application/json",
     },
   });
+};
+
+export const escapeText = (text: string) => {
+  const chars = [
+    // "_",
+    // "*",
+    "[",
+    "]",
+    "(",
+    ")",
+    // "~",
+    "`",
+    ">",
+    "#",
+    "+",
+    "-",
+    "=",
+    "|",
+    "{",
+    "}",
+    ".",
+    "!",
+  ];
+
+  for (const c of chars) {
+    text = text.replaceAll(c, `\\${c}`);
+  }
+
+  return text;
 };

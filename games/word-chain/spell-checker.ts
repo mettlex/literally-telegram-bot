@@ -1,4 +1,4 @@
-import { WiktionaryAPIResponse } from "../../types.ts";
+import type { WiktionaryAPIResponse } from "../../types.ts";
 
 interface SpellCheckedWordCache {
   [word: string]: boolean | undefined;

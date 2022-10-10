@@ -1,6 +1,6 @@
 import { Application, Router } from "https://deno.land/x/oak@v11.1.0/mod.ts";
 
-import { TelegramMessage } from "./types.ts";
+import type { TelegramMessage } from "./types.ts";
 import { setup } from "./games/setup.ts";
 
 const telegramBotWebhook = new Router().post("/", async (ctx) => {
