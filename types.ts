@@ -52,7 +52,8 @@ export type WordChainGameMode =
   | "Casual"
   | "Challenge"
   | "Banned Letters"
-  | "Me vs Bot";
+  | "Me vs Bot"
+  | "Random Letters";
 
 export interface WordChainGame {
   gameStartedAt: Date;
@@ -74,8 +75,11 @@ export interface WordChainGame {
   bannedLetters: string[];
   shouldAddBannedLetter: boolean;
   score: {
-    [key: string]: number;
+    [key: string | number]: number;
   };
+  turnSeconds?: number;
+  initialTurnSeconds?: number;
+  interval?: number;
 }
 export interface ActiveWordChainGames {
   [chatId: string]: WordChainGame | undefined;
