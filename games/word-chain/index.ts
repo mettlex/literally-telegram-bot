@@ -66,9 +66,13 @@ export const handle = async (message: TelegramMessage) => {
   }
 
   if (
-    content.startsWith("wc.start ") ||
+    content.startsWith("wc.start") ||
     content.startsWith("/start_word_chain")
   ) {
+    if (activeWCGames[message.chat.id]) {
+      return;
+    }
+
     const maxLives = 3;
 
     activeWCGames[message.chat.id] = {
@@ -158,6 +162,26 @@ export const handle = async (message: TelegramMessage) => {
     }
 
     return;
+  }
+
+  if (content.startsWith("wc.stop") || content.startsWith("/stop_word_chain")) {
+    if (activeWCGames[message.chat.id]) {
+      try {
+        clearInterval(activeWCGames[message.chat.id]!.interval);
+        activeWCGames[message.chat.id] = undefined;
+
+        const response = await sendMessage({
+          chat_id: message.chat.id,
+          text: escapeText(`*Word-Chain Game Stopped.*`),
+          reply_to_message_id: message.message_id,
+          parse_mode: "MarkdownV2",
+        });
+
+        console.log(await response.text());
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }
 
   const runningGame = activeWCGames[message.chat.id];
